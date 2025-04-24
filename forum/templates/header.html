@@ -1,6 +1,10 @@
-<a href="/" id="nolinks"><b>{{ config.SITE_NAME }}</b></a>{% if config.SITE_DESCRIPTION %} - {% endif %} <i>{{ config.SITE_DESCRIPTION }}</i>
+<a href="/" id="nolinks"><b>{{ config.SITE_NAME }}</b></a>
+<a href="/" style="margin-left:1em;">Home</a>
+<a href="/subforum?sub=1" style="margin-left:1em;">Forum</a>
+<a href="{% if current_user.is_authenticated %}/addpost?sub=1{% else %}/loginform{% endif %}" style="margin-left:1em;">Create Post</a>
+{% if config.SITE_DESCRIPTION %} - {% endif %} <i>{{ config.SITE_DESCRIPTION }}</i>
 <div class="login">
-	{% if current_user.is_authenticated() %}
+	{% if current_user.is_authenticated %}
 	<b {% if current_user.admin %} style="color: red;" {% endif %}>{{ current_user.username }}</b><a class="logoutlink" href="/action_logout">(logout)</a>
 	{% else %}
 	<a href="/loginform">Click here to login or register!</a>

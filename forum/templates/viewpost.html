@@ -5,8 +5,8 @@
 <div class="actualpost">
 	<div class="actualposttitle">
 		<a href="/viewpost?post={{ post.id }}">{{post.title}}</a>
-		<div class="postposter" {% if post.user.admin %} style="color: red;" {% endif %}>
-			{{ post.user.username }}
+		<div class="postposter" {% if post.author.admin %} style="color: red;" {% endif %}>
+			{{ post.author.username }}
 
 		</div>
 		<div class="posttime">
@@ -28,7 +28,7 @@
 
 	
 
-	{% if current_user.is_authenticated() %}
+	{% if current_user.is_authenticated %}
 	<input type="button" id="displayaddcomment" onclick="toggle()" value="Add a comment">
 
 	{% else %}
@@ -41,7 +41,7 @@
 	
 	<div class="comment">
 		<div class="commentuser">
-			(<span  {% if comment.user.admin %} style="color: red;" {% endif %}>{{ comment.user.username }}</span>) - 
+			(<span  {% if comment.author.admin %} style="color: red;" {% endif %}>{{ comment.author.username }}</span>) - 
 		</div>
 		<div class="commentcontent">
 			{{ comment.content }}

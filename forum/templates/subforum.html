@@ -4,60 +4,50 @@
 {{ path|safe }}
 <div class="subforumheader">
 	<div class="subforumheadertitle">
-	{{ subforum.title}} 
+	{{ subforum.name }} 
 	</div>
 	--
 	<div class="subforumheaderdesc">
 	{{ subforum.description }}
 	</div>
 
-		{% if subforums %}
-		
+	{% if subforums %}
 		{% for sub in subforums %}
 		<div class="subsubforums">
-		<div class="subsubforumtitle">
-		<a href="/subforum?sub={{ sub.id }}">{{ sub.title }}</a>
+			<div class="subsubforumtitle">
+				<a href="/subforum?sub={{ sub.id }}">{{ sub.name }}</a>
+			</div>
+			<div class="subsubforumdesc">
+				{{ sub.description }}
+			</div>
 		</div>
-		<div class="subsubforumdesc">
-		{{ sub.description }}
-		</div>
-		 </div>
-
 		{% endfor %}
-		{% endif %}
+	{% endif %}
 	
 	<div class="subforumheaderlink">
-	{% if current_user.is_authenticated() %}
-	<a href="/addpost?sub={{ subforum.id }}">Create a post in <b>{{ subforum.title }}</b></a>
-	{% else %}
-	<a href="/loginform">Log in or create an account to make a post in <b>{{ subforum.title }}</b></a>
-	{% endif %}
+		<a href="{% if current_user.is_authenticated %}/addpost?sub={{ subforum.id }}{% else %}/loginform{% endif %}">
+			Create a post in <b>{{ subforum.name }}</b>
+		</a>
 	</div>
-	
 </div>
-
-
-
-
 
 {% if posts.first() %}
 	{% for post in posts %}
 	<div class="post">
 		<div class="posttitle">
-		<a href="/viewpost?post={{ post.id }}">{{ post.title }}</a>
+			<a href="/viewpost?post={{ post.id }}">{{ post.title }}</a>
 		</div>
 		<div class="postusername">
-			by <b {% if post.user.admin %} style="color: red;" {% endif %}> {{post.user.username}}</b>
+			by <b {% if post.author.admin %} style="color: red;" {% endif %}>{{ post.author.username }}</b>
 			<div class="date">
-			{{ post.get_time_string() }}
+				{{ post.get_time_string() }}
 			</div>
 		</div>
 	</div>
 	{% endfor %}
-
 {% else %}
 <div class="noposts">
-<b>There are no posts in this subforum</b>
+	<b>There are no posts in this subforum</b>
 </div>
 {% endif %}
 {% endblock %}

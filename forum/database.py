@@ -1,134 +1,108 @@
-from app import app
-from flask.ext.login import UserMixin
-from flask.ext.sqlalchemy import SQLAlchemy
-import re
-import datetime
+# NOTE: If you get "no such table: subforum", make sure to run db.create_all() after importing all models.
+# This is usually handled in your app's __init__.py or app.py.
+
+from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
-db = SQLAlchemy(app)
-password_regex = re.compile("^[a-zA-Z0-9!@#%&]{6,40}$")
-username_regex = re.compile("^[a-zA-Z0-9!@#%&]{4,40}$")
-#Account checks
-def username_taken(username):
-	return User.query.filter(User.username == username).first()
-def email_taken(email):
-	return User.query.filter(User.email == email).first()
-def valid_username(username):
-	if not username_regex.match(username):
-		#username does not meet password reqirements
-		return False
-	#username is not taken and does meet the password requirements
-	return True
-def valid_password(password):
-	return password_regex.match(password)
-#Post checks
-def valid_title(title):
-	return len(title) > 4 and len(title) < 140
-def valid_content(content):
-	return len(content) > 10 and len(content) < 5000
+from . import db
+import datetime
+import re
 
+# --- Validation regex ---
+USERNAME_RE = re.compile(r"^[a-zA-Z0-9_]{3,32}$")
+PASSWORD_RE = re.compile(r"^[\S]{6,64}$")
 
-#OBJECT MODELS
+# --- User model ---
 class User(UserMixin, db.Model):
-	id = db.Column(db.Integer, primary_key=True)
-	username = db.Column(db.Text, unique=True)
-	password_hash = db.Column(db.Text)
-	email = db.Column(db.Text, unique=True)
-	admin = db.Column(db.Boolean, default=False, unique=True)
-	posts = db.relationship("Post", backref="user")
-	comments = db.relationship("Comment", backref="user")
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(32), unique=True, nullable=False)
+    email = db.Column(db.String(128), unique=True, nullable=False)
+    password_hash = db.Column(db.String(128), nullable=False)
+    is_admin = db.Column(db.Boolean, default=False)
+    created_at = db.Column(db.DateTime, default=datetime.datetime.utcnow)
+    posts = db.relationship("Post", backref="author", lazy="dynamic")
+    comments = db.relationship("Comment", backref="author", lazy="dynamic")
 
-	def __init__(self, email, username, password):
-		self.email = email
-		self.username = username
-		self.password_hash = generate_password_hash(password)
-	def check_password(self, password):
-		return check_password_hash(self.password_hash, password)
-class Post(db.Model):
-	id = db.Column(db.Integer, primary_key=True)
-	title = db.Column(db.Text)
-	content = db.Column(db.Text)
-	comments = db.relationship("Comment", backref="post")
-	user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-	subforum_id = db.Column(db.Integer, db.ForeignKey('subforum.id'))
-	postdate = db.Column(db.DateTime)
+    def __init__(self, username, email, password, is_admin=False):
+        self.username = username
+        self.email = email
+        self.password_hash = generate_password_hash(password)
+        self.is_admin = is_admin
 
-	#cache stuff
-	lastcheck = None
-	savedresponce = None
-	def __init__(self, title, content, postdate):
-		self.title = title
-		self.content = content
-		self.postdate = postdate
-	def get_time_string(self):
-		#this only needs to be calculated every so often, not for every request
-		#this can be a rudamentary chache
-		now = datetime.datetime.now()
-		if self.lastcheck is None or (now - self.lastcheck).total_seconds() > 30:
-			self.lastcheck = now
-		else:
-			return self.savedresponce
+    def check_password(self, password):
+        return check_password_hash(self.password_hash, password)
 
-		diff = now - self.postdate
-
-		seconds = diff.total_seconds()
-		print seconds
-		if seconds / (60 * 60 * 24 * 30) > 1:
-			self.savedresponce =  " " + str(int(seconds / (60 * 60 * 24 * 30))) + " months ago"
-		elif seconds / (60 * 60 * 24) > 1:
-			self.savedresponce =  " " + str(int(seconds / (60*  60 * 24))) + " days ago"
-		elif seconds / (60 * 60) > 1:
-			self.savedresponce = " " + str(int(seconds / (60 * 60))) + " hours ago"
-		elif seconds / (60) > 1:
-			self.savedresponce = " " + str(int(seconds / 60)) + " minutes ago"
-		else:
-			self.savedresponce =  "Just a moment ago!"
-
-		return self.savedresponce
-
+# --- Subforum model (supports hierarchy) ---
 class Subforum(db.Model):
-	id = db.Column(db.Integer, primary_key=True)
-	title = db.Column(db.Text, unique=True)
-	description = db.Column(db.Text)
-	subforums = db.relationship("Subforum")
-	parent_id = db.Column(db.Integer, db.ForeignKey('subforum.id'))
-	posts = db.relationship("Post", backref="subforum")
-	path = None
-	hidden = db.Column(db.Boolean, default=False)
-	def __init__(self, title, description):
-		self.title = title
-		self.description = description
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(64), unique=True, nullable=False)
+    description = db.Column(db.String(256))
+    parent_id = db.Column(db.Integer, db.ForeignKey('subforum.id'))
+    children = db.relationship("Subforum", backref=db.backref("parent", remote_side=[id]), lazy="dynamic")
+    posts = db.relationship("Post", backref="subforum", lazy="dynamic")
+    is_hidden = db.Column(db.Boolean, default=False)
 
+# --- Post model ---
+class Post(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(140), nullable=False)
+    content = db.Column(db.Text, nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.datetime.utcnow)
+    updated_at = db.Column(db.DateTime, onupdate=datetime.datetime.utcnow)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    subforum_id = db.Column(db.Integer, db.ForeignKey('subforum.id'), nullable=False)
+    comments = db.relationship("Comment", backref="post", lazy="dynamic")
+
+    def get_time_string(self):
+        if self.created_at:
+            return self.created_at.strftime("%Y-%m-%d %H:%M")
+        return ""
+
+# --- Comment model ---
 class Comment(db.Model):
-	id = db.Column(db.Integer, primary_key=True)
-	content = db.Column(db.Text)
-	postdate = db.Column(db.DateTime)
-	user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-	post_id = db.Column(db.Integer, db.ForeignKey("post.id"))
+    id = db.Column(db.Integer, primary_key=True)
+    content = db.Column(db.Text, nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.datetime.utcnow)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    post_id = db.Column(db.Integer, db.ForeignKey('post.id'), nullable=False)
+    # For comment threads: parent_id = db.Column(db.Integer, db.ForeignKey('comment.id'))
+    # replies = db.relationship("Comment", ...)
 
-	lastcheck = None
-	savedresponce = None
-	def __init__(self, content, postdate):
-		self.content = content
-		self.postdate = postdate
-	def get_time_string(self):
-		#this only needs to be calculated every so often, not for every request
-		#this can be a rudamentary chache
-		now = datetime.datetime.now()
-		if self.lastcheck is None or (now - self.lastcheck).total_seconds() > 30:
-			self.lastcheck = now
-		else:
-			return self.savedresponce
+    def get_time_string(self):
+        if self.created_at:
+            return self.created_at.strftime("%Y-%m-%d %H:%M")
+        return ""
 
-		diff = now - self.postdate
-		seconds = diff.total_seconds()
-		if seconds / (60 * 60 * 24 * 30) > 1:
-			self.savedresponce =  " " + str(int(seconds / (60 * 60 * 24 * 30))) + " months ago"
-		elif seconds / (60 * 60 * 24) > 1:
-			self.savedresponce =  " " + str(int(seconds / (60*  60 * 24))) + " days ago"
-		elif seconds / (60 * 60) > 1:
-			self.savedresponce = " " + str(int(seconds / (60 * 60))) + " hours ago"
-		elif seconds / (60) > 1:
-			self.savedresponce = " " + str(int(seconds / 60)) + " minutes ago"
-		else:
-			self.savedresponce =  "Just a moment ago!"
-		return self.savedresponce
+# --- Validation helpers ---
+def username_taken(username):
+    return db.session.query(User.id).filter_by(username=username).first() is not None
+
+def email_taken(email):
+    return db.session.query(User.id).filter_by(email=email).first() is not None
+
+def valid_username(username):
+    return USERNAME_RE.match(username) is not None
+
+def valid_password(password):
+    return PASSWORD_RE.match(password) is not None
+
+def valid_title(title):
+    return 4 < len(title) < 140
+
+def valid_content(content):
+    return 10 < len(content) < 5000
+
+# --- Utility for time display ---
+def time_ago(dt):
+    now = datetime.datetime.utcnow()
+    diff = now - dt
+    seconds = diff.total_seconds()
+    if seconds < 60:
+        return "just now"
+    elif seconds < 3600:
+        return f"{int(seconds // 60)} minutes ago"
+    elif seconds < 86400:
+        return f"{int(seconds // 3600)} hours ago"
+    elif seconds < 2592000:
+        return f"{int(seconds // 86400)} days ago"
+    else:
+        return f"{int(seconds // 2592000)} months ago"

@@ -1,8 +1,18 @@
 import os
+import secrets
+from pathlib import Path
 
-SECRET_KEY = os.environ['SECRET_KEY']
-SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
-SITE_NAME = "Default Forum Name"
-SITE_DESCRIPTION = "Change this value in config.py"
-#SQLALCHEMY_DATABASE_URI = "sqlite:///../data/database.db";
+# Create base directory paths
+BASE_DIR = Path(__file__).resolve().parent.parent
+INSTANCE_DIR = BASE_DIR / 'instance'
+INSTANCE_DIR.mkdir(exist_ok=True, parents=True)
+
+# Database configuration
+DB_FILE = INSTANCE_DIR / 'forum.db'
+SQLALCHEMY_DATABASE_URI = (f'sqlite:///{DB_FILE}')
+SECRET_KEY = secrets.token_hex(32)
+
+# Site configuration
+SITE_NAME = "BarterBoard"
+SITE_DESCRIPTION = "A simple forum application"
 
