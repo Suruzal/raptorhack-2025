@@ -63,8 +63,7 @@ class Comment(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     post_id = db.Column(db.Integer, db.ForeignKey('post.id'), nullable=False)
-    # For comment threads: parent_id = db.Column(db.Integer, db.ForeignKey('comment.id'))
-    # replies = db.relationship("Comment", ...)
+    author = db.relationship('User', backref=db.backref('comments', lazy=True))  # Add this line
 
     def get_time_string(self):
         if self.created_at:

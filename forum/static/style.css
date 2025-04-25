@@ -98,17 +98,14 @@
 
 .postusername {
     font-size: 12pt;
-    /* Removed font-style: italic; */
 }
 
 .subforumheaderlink {
     font-size: 12pt;
-    /* Removed font-style: italic; */
 }
 
 .postinginfo {
     font-size: 11pt;
-    /* Removed font-style: italic; */
 }
 #nolinks{
 	text-decoration: none;
@@ -136,42 +133,40 @@
 	font-weight: bold;
 	margin-top: 0; /* Add this line to remove any top margin */
 }
-.actualpost{
-	padding: 1%;
-	border: 1px solid black;
-	border-collapse: collapse;
-	margin-bottom: 1%;
+.actualpost {
+    padding: 1%;
+    margin-bottom: 1%;
 }
-.actualposttitle{
-	border-collapse: collapse;
-	border-bottom: 1px solid black;
-	padding: 1%;
-	font-size: 16pt;
-	font-weight: bold;
+
+.actualposttitle {
+    border-bottom: 1px solid black;
+    padding: 1%;
+    font-size: 16pt;
+    font-weight: bold;
 }
-.postcontent{
-	padding: 1%;
+
+.postposter {
+    font-size: 12pt;
+    color: black;
 }
-.postposter{
-	font-size: 12pt;
-	font-style: italic;
-	color: black;
+
+.posttime {
+    font-size: 11pt;
 }
-.posttime{
-	font-style: italic;
-	font-size: 11pt;
-}
+
 .whitespace{
 	white-space: pre-line;
 }
-.comments{
-	border: 1px solid gray;
-	padding: 1%;
-	margin-top: 1%;
+.comments {
+    padding: 1%;
+    margin-top: 1%;
 }
-.comment{
-	border-bottom: 1px solid gray;
+
+.comment {
+    border-bottom: 1px solid gray;
+    padding: 1% 0;  /* Add vertical padding but remove horizontal padding */
 }
+
 .commentuser{
 	display: inline;
 	font-weight: bold;
@@ -181,7 +176,6 @@
 }
 .commenttime{
 	font-size: 11pt;
-	font-style: italic;
 }
 
 

@@ -1,6 +1,5 @@
 {% extends 'layout.html' %}
 {% block body %}
-{{ path|safe}}
 
 <div class="actualpost">
 	<div class="actualposttitle">
@@ -26,7 +25,7 @@
 </div>
 <div style="text-align: center;">
 
-	
+
 
 	{% if current_user.is_authenticated %}
 	<input type="button" id="displayaddcomment" onclick="toggle()" value="Add a comment">
@@ -38,7 +37,7 @@
 {%if comments%}
 <div class="comments">
 {% for comment in comments %}
-	
+
 	<div class="comment">
 		<div class="commentuser">
 			(<span  {% if comment.author.admin %} style="color: red;" {% endif %}>{{ comment.author.username }}</span>) - 
@@ -52,7 +51,7 @@
 		</div>
 	</div>
 	<br>
-	
+
 {% endfor %}
 </div>
 {% endif %}
@@ -67,7 +66,7 @@ function toggle(){
 		div.style.display = "none";
 		button.value="Add a comment"
 	}
-	
+
 }
 </script>
 
