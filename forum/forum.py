@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, Blueprint, url_for
+from flask import render_template, request, redirect, Blueprint, url_for, jsonify
 from flask_login import login_required, current_user, logout_user, login_user
 import datetime
 from . import db, login_manager
@@ -6,6 +6,7 @@ from .database import *
 import os
 from .setup import init_site
 import hashlib
+from werkzeug.security import generate_password_hash, check_password_hash
 
 bp = Blueprint('main', __name__)
 
@@ -21,9 +22,13 @@ def inject_user():
     return dict(current_user=current_user)
 
 @bp.route('/')
-def index():
-    subforums = Subforum.query.filter(Subforum.parent_id == None).order_by(Subforum.id)
-    return render_template("subforums.html", subforums=subforums)
+def landing():
+    return render_template("landing.html")
+
+@bp.route('/home')
+def home():
+    posts = Post.query.order_by(Post.id.desc()).all()
+    return render_template("allposts.html", posts=posts)
 
 @bp.route('/subforum')
 def subforum():
@@ -121,28 +126,32 @@ def action_login():
     user = User.query.filter(User.username == username).first()
     if user and user.check_password(password):
         login_user(user)
-    else:
-        errors = []
-        errors.append("Username or password is incorrect!")
-        return render_template("login.html", errors=errors)
-    return redirect("/")
+        return redirect("/home")
+    errors = []
+    errors.append("Username or password is incorrect!")
+    return render_template("login.html", errors=errors)
 
 @login_required
 @bp.route('/action_logout')
 def action_logout():
     logout_user()
-    return redirect("/")
+    return redirect("/home")
 
 @bp.route('/action_createaccount', methods=['POST'])
 def action_createaccount():
     username = request.form['username']
     password = request.form['password']
     email = request.form['email']
+    major = request.form['major']
     errors = []
     retry = False
+    
+    if not major:
+        errors.append("You must provide a major!")
+        retry = True
     if username_taken(username):
         errors.append("Username is already taken!")
-        retry=True
+        retry = True
     if email_taken(email):
         errors.append("An account already exists with this email!")
         retry = True
@@ -154,13 +163,35 @@ def action_createaccount():
         retry = True
     if retry:
         return render_template("login.html", errors=errors)
-    user = User(username=username, email=email, password=password)  # pass raw password
+    
+    user = User(username=username, email=email, major=major)
+    user.set_password(password)  # Use the set_password method instead of direct assignment
+    
     if user.username == "admin":
         user.is_admin = True
+        
     db.session.add(user)
     db.session.commit()
     login_user(user)
-    return redirect("/")
+    return redirect("/home")
+
+@bp.route('/transfer_karma', methods=['POST'])
+@login_required
+def transfer_karma():
+    try:
+        recipient_id = int(request.form['recipient_id'])
+        amount = int(request.form['amount'])
+        
+        recipient = User.query.get(recipient_id)
+        if not recipient:
+            return jsonify({'error': 'User not found'}), 404
+            
+        if current_user.transfer_karma(recipient, amount):
+            return jsonify({'success': True})
+        else:
+            return jsonify({'error': 'Insufficient karma'}), 400
+    except:
+        return jsonify({'error': 'Invalid request'}), 400
 
 def error(errormessage):
     return "<b style=\"color: red;\">" + errormessage + "</b>"

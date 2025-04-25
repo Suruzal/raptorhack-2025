@@ -7,25 +7,21 @@
 	<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
 <body>
-<div class="page">
-	<div class="header">
-		{% include 'header.html' %}
-	</div>
+<!-- Remove .page wrapper from header so header can be full width -->
+	{% include 'header.html' %}
+<div class="page" style="margin-top:0;">
 	{% if errors %}
 	<div class="errors">
 	{% for error in errors %}
 		<p class="error">
 			{{ error }}
 		</p>
-
 	{% endfor %}
 	</div>
 {% endif %}
-	<div class="content">
+	<div class="content" style="margin-top:0;">
 		{% block body %}{% endblock %}
 	</div>
 </div>
 </body>
-
-
 </html>

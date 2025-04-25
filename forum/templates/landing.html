@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='bootstrap.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='style.css')}}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap">
+    <title>{{ BarterBoard }}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'brand': '#24b3af',
+                        'brand-hover': '#1f9894'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        @keyframes fadeIn {
+            0% { opacity: 0; background-color: white; }
+            100% { opacity: 1; background-color: #fde7c4; }
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            50% { transform: translate(-5%, 5%) rotate(-1deg); }
+            100% { transform: translate(0, 0) rotate(0deg); }
+        }
+
+        .aurora-bg {
+            animation: float 8s ease-in-out infinite;
+            background: radial-gradient(circle at 50% 50%, rgba(36, 179, 175, 0.8), rgba(168, 170, 139, 0.3));
+            filter: blur(100px);
+        }
+
+        body {
+            animation: fadeIn 0.4s ease-in forwards;
+            background-color: #fde7c4;
+        }
+        .bg-brown {
+            background-color: #fde7c4;
+        }
+        .text-gray-900 {
+            color: #37272f !important;
+        }
+        .text-gray-500 {
+            color: #37272f !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-brown">
+        <header class="absolute inset-x-0 top-0 z-50">
+            <nav class="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
+                <div class="flex lg:flex-1">
+                    <a href="/" class="-m-1.5 p-1.5">
+                        <span class="sr-only">BarterBoard</span>
+                        <img class="h-12 w-auto" src="{{ url_for('static', filename='images/BarterNoBG.png') }}" alt="BarterBoard Logo">
+                    </a>
+                </div>
+                <div class="flex lg:hidden">
+                    <button type="button" class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700">
+                        <span class="sr-only">Open main menu</span>
+                        <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                        </svg>
+                    </button>
+                </div>
+                <div class="flex lg:flex lg:gap-x-12">
+                    <a href="/home" class="text-sm/6 font-semibold text-gray-900">View Tutors</a>
+                    <a href="/create" class="text-sm/6 font-semibold text-gray-900">Create Tutoring Post</a>
+                    <a href="/profile" class="text-sm/6 font-semibold text-gray-900">Profile</a>
+                </div>
+                <div class="flex lg:flex lg:flex-1 lg:justify-end">
+                    <a href="/loginform" class="text-sm/6 font-semibold text-gray-900">Log in <span aria-hidden="true">&rarr;</span></a>
+                </div>
+            </nav>
+            <!-- Mobile menu, show/hide based on menu open state. -->
+            <div class="lg:hidden" role="dialog" aria-modal="true">
+                <!-- Background backdrop -->
+                <div class="fixed inset-0 z-50"></div>
+                <div class="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
+                    <div class="flex items-center justify-between">
+                        <a href="/" class="-m-1.5 p-1.5">
+                            <span class="sr-only">BarterBoard</span>
+                            <img class="h-8 w-auto" src="{{ url_for('static', filename='images/BarterNoBG.png') }}" alt="BarterBoard">
+                        </a>
+                        <button type="button" class="-m-2.5 rounded-md p-2.5 text-gray-700">
+                            <span class="sr-only">Close menu</span>
+                            <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="mt-6 flow-root">
+                        <div class="-my-6 divide-y divide-gray-500/10">
+                            <div class="space-y-2 py-6">
+                                <a href="/home" class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50">View Tutors</a>
+                                <a href="/create" class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50">Create Tutoring Post</a>
+                                <a href="/profile" class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50">Profile</a>
+                            </div>
+                            <div class="py-6">
+                                <a href="/loginform" class="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50">Log in</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="relative isolate px-6 pt-14 lg:px-8">
+          <div class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80" aria-hidden="true">
+            <div class="aurora-bg relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]" style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)"></div>
+          </div>
+          <div class="mx-auto max-w-2xl py-18 sm:py-48 lg:py-40">
+            <div class="text-center">
+              <h1 class="text-5xl font-semibold tracking-tight text-balance text-gray-900 sm:text-7xl">Trade Brains, Get Gains.</h1>
+              <p class="mt-8 text-lg font-medium text-pretty text-gray-500 sm:text-xl/8">BarterBoard connects students to swap academic skills, rate each other, and build a trusted network of peer support — because learning is better when it's shared.</p>
+<div class="mt-10 flex items-center justify-center">
+  <a href="/home" class="rounded-md bg-[#24b3af] px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-[#1e9691] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#24b3af]">Get started</a>
+</div>
+              <div class="mt-10 flex items-center justify-center gap-x-6">
+              </div>
+            </div>
+          </div>
+          <div class="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]" aria-hidden="true">
+            <div class="aurora-bg relative left-[calc(50%+3rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 sm:left-[calc(50%+36rem)] sm:w-[72.1875rem]" style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)"></div>
+          </div>
+
+<!--Bento Boxes-->
+
+  <div class="mx-auto max-w-2xl px-6 lg:max-w-7xl lg:px-8">
+    <h2 class="text-center text-base/7 font-semibold text-[#24b3af]">Only the best</h2>
+    <p class="mx-auto mt-2 max-w-lg text-center text-4xl font-semibold tracking-tight text-balance text-gray-900 sm:text-5xl">All your learning needs, in one place</p>
+    <div class="mt-10 grid gap-4 sm:mt-16 lg:grid-cols-3 lg:grid-rows-2">
+      <div class="relative lg:row-span-2">
+        <div class="absolute inset-px rounded-lg bg-white lg:rounded-l-[2rem]"></div>
+        <div class="relative flex h-full flex-col overflow-hidden rounded-[calc(var(--radius-lg)+1px)] lg:rounded-l-[calc(2rem+1px)]">
+          <div class="px-8 pt-8 pb-3 sm:px-10 sm:pt-10 sm:pb-0">
+            <p class="mt-2 text-lg font-medium tracking-tight text-gray-950 max-lg:text-center">Tutors Approve</p>
+            <p class="mt-2 max-w-lg text-sm/6 text-gray-600 max-lg:text-center">BarterBoard is a well respected tutoring platform that respects its tutors and tries to uphold their integrity and time, resulting in a safe and positive learning environment</p>
+          </div>
+          <div class="@container relative min-h-[30rem] w-full grow max-lg:mx-auto max-lg:max-w-sm">
+            <div class="absolute inset-x-10 top-10 bottom-0 overflow-hidden rounded-t-[12cqw] border-x-[3cqw] border-t-[3cqw] border-gray-700 bg-gray-900 shadow-2xl">
+              <img class="h-full w-full object-cover object-[center_top]" src="{{ url_for('static', filename='images/tutors-dashboard.png') }}" alt="Tutors Dashboard">
+            </div>
+          </div>
+        </div>
+        <div class="pointer-events-none absolute inset-px rounded-lg shadow-sm ring-1 ring-black/5 lg:rounded-l-[2rem]"></div>
+      </div>
+      <div class="relative max-lg:row-start-2 lg:col-start-2 lg:row-start-1">
+        <div class="absolute inset-px rounded-lg bg-white"></div>
+        <div class="relative flex h-full flex-col overflow-hidden rounded-[calc(var(--radius-lg)+1px)]">
+          <div class="px-8 pt-8 sm:px-10 sm:pt-10">
+            <p class="mt-2 text-lg font-medium tracking-tight text-gray-950 max-lg:text-center">Two Way Street</p>
+            <p class="mt-2 max-w-lg text-sm/6 text-gray-600 max-lg:text-center">BarterBoard runs on students being able to equally give as much as they recieve, and tries to create a community in which knowledge is shared as much as possible. The karma system enhances this unique trait of BarterBoard</p>
+          </div>
+        </div>
+        <div class="pointer-events-none absolute inset-px rounded-lg shadow-sm ring-1 ring-black/5"></div>
+      </div>
+      <div class="relative max-lg:row-start-3 lg:col-start-2 lg:row-start-2">
+        <div class="absolute inset-px rounded-lg bg-white"></div>
+        <div class="relative flex h-full flex-col overflow-hidden rounded-[calc(var(--radius-lg)+1px)]">
+          <div class="px-8 pt-8 sm:px-10 sm:pt-10">
+            <p class="mt-2 text-lg font-medium tracking-tight text-gray-950 max-lg:text-center">Karma</p>
+            <p class="mt-2 max-w-lg text-sm/6 text-gray-600 max-lg:text-center">
+              Karma is the currency that powers BarterBoard. This can be gained through tutoring and can be spent on tutoring sessions. This allows everyone to contribute to the BarterBoard system and learning environment.
+            </p>
+          </div>
+          <div>
+          </div>
+          <!-- Add Karma Icon at the bottom -->
+          <div class="flex justify-center mt-auto mb-6">
+            <img src="{{ url_for('static', filename='images/KarmaIcon.png') }}" alt="Karma Icon" class="h-24 w-24">
+          </div>
+        </div>
+        <div class="pointer-events-none absolute inset-px rounded-lg shadow-sm ring-1 ring-black/5"></div>
+      </div>
+      <div class="relative lg:row-span-2">
+        <div class="absolute inset-px rounded-lg bg-white max-lg:rounded-b-[2rem] lg:rounded-r-[2rem]"></div>
+        <div class="relative flex h-full flex-col overflow-hidden rounded-[calc(var(--radius-lg)+1px)] max-lg:rounded-b-[calc(2rem+1px)] lg:rounded-r-[calc(2rem+1px)]">
+          <div class="px-8 pt-8 pb-3 sm:px-10 sm:pt-10 sm:pb-0">
+            <p class="mt-2 text-lg font-medium tracking-tight text-gray-950 max-lg:text-center">Loved by Students</p>
+            <p class="mt-2 max-w-lg text-sm/6 text-gray-600 max-lg:text-center">BarterBoard opens itself to students as much as tutors fostering a great space to learn and give knowledge.</p>
+          </div>
+          <div class="relative min-h-[30rem] w-full grow">
+            <div class="absolute top-10 right-0 bottom-0 left-10 overflow-hidden rounded-tl-xl bg-gray-900 shadow-2xl">
+              <div class="flex bg-gray-800/40 ring-1 ring-white/5">
+                <div class="-mb-px flex text-sm/6 font-medium text-gray-400">
+                  <div class="border-r border-b border-r-white/10 border-b-white/20 bg-white/5 px-4 py-2 text-white">NotificationSetting.jsx</div>
+                  <div class="border-r border-gray-600/10 px-4 py-2">App.jsx</div>
+                </div>
+              </div>
+              <div class="px-6 pt-6 pb-14">
+                <!-- Your code example -->
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="pointer-events-none absolute inset-px rounded-lg shadow-sm ring-1 ring-black/5 max-lg:rounded-b-[2rem] lg:rounded-r-[2rem]"></div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

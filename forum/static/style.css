@@ -2,15 +2,12 @@
 	font-family: Verdana;
 	font-style: normal;
 	font-size: 14pt;
-
 	margin-left: auto;
 	margin-right: auto;
-	margin-top: 1%;
+	margin-top: 0; /* Changed from 1% to 0 */
 	width: 80%;
-	
 	padding-left: 3%;
 	padding-right: 3%;
-
 }
 .header{
 	border: 1px solid black;
@@ -20,7 +17,7 @@
 	margin-bottom: none;
 }
 .content{
-	margin-top: 0.5%;
+	margin-top: 0; /* Changed from 0.5% to 0 */
 }
 .login{
 	width: 25%;
@@ -130,6 +127,7 @@
 .toplevelinfo{
 	padding: 0.5%;
 	font-weight: bold;
+	margin-top: 0; /* Add this line to remove any top margin */
 }
 .actualpost{
 	padding: 1%;
