@@ -1,95 +1,96 @@
-.page{
-	font-family: Verdana;
-	font-style: normal;
-	font-size: 14pt;
-	margin-left: auto;
-	margin-right: auto;
-	margin-top: 0; /* Changed from 1% to 0 */
-	width: 80%;
-	padding-left: 3%;
-	padding-right: 3%;
+.page {
+    font-family: Verdana;
+    font-style: normal;
+    font-size: 14pt;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 0; /* Changed from 1% to 0 */
+    margin-bottom: 4rem; /* Add space for fixed footer */
+    width: 80%;
+    padding-left: 3%;
+    padding-right: 3%;
 }
-.header{
-	border: 1px solid black;
-	overflow: hidden;
-	vertical-align: middle;
-	padding: 0.5%;
-	margin-bottom: none;
+.header {
+    border: 1px solid black;
+    overflow: hidden;
+    vertical-align: middle;
+    padding: 0.5%;
+    margin-bottom: none;
 }
-.content{
-	margin-top: 0; /* Changed from 0.5% to 0 */
+.content {
+    margin-top: 0; /* Changed from 0.5% to 0 */
 }
-.login{
-	width: 25%;
-	float: right;
-	text-align: center;
+.login {
+    width: 25%;
+    float: right;
+    text-align: center;
 
 }
-.loginbox{
-	margin-right: auto;
-	margin-left: auto;
-	text-align: center;
-	margin-top: 3%;
+.loginbox {
+    margin-right: auto;
+    margin-left: auto;
+    text-align: center;
+    margin-top: 3%;
 }
-.loginelement{
-	margin-top: 0.5%;
+.loginelement {
+    margin-top: 0.5%;
 }
-.logoutlink{
-	padding-left: 0.5%;
-	font-size: 12pt;
+.logoutlink {
+    padding-left: 0.5%;
+    font-size: 12pt;
 }
-.postsubmit{
-	margin-left: auto;
-	margin-right: auto;
-	text-align: center;
-	padding-top: 3%;
-	width: 80%;  /* Added to ensure content is centered */
+.postsubmit {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    padding-top: 3%;
+    width: 80%;  /* Added to ensure content is centered */
 }
-.subforumlisting{
-	border-bottom: 1px solid gray;
-	padding: 1%;
-	margin-bottom: 1%;
+.subforumlisting {
+    border-bottom: 1px solid gray;
+    padding: 1%;
+    margin-bottom: 1%;
 }
-.inputbox{
-	padding: 0.25%;
-	margin-top: 0.5%;
+.inputbox {
+    padding: 0.25%;
+    margin-top: 0.5%;
 }
-.errors{
-	border-bottom: 1px solid black;
-	margin-top: 2%;
+.errors {
+    border-bottom: 1px solid black;
+    margin-top: 2%;
 }
-.error{
-	color: red;
-	font-weight: bold;
+.error {
+    color: red;
+    font-weight: bold;
 }
-.subforumtitle{
-	color: blue;
-	font-size: 15pt;
-	font-weight: bold;
+.subforumtitle {
+    color: blue;
+    font-size: 15pt;
+    font-weight: bold;
 }
-.subforumdesc{
-	font-size: 13pt;
-	font-style: italic;
+.subforumdesc {
+    font-size: 13pt;
+    font-style: italic;
 }
-.subforumheader{
-	padding: 0.5%;
-	padding-left: 1%;
-	margin-top: none;
-	padding-bottom: none;
-	margin-bottom: 0.5%;
-	border: 1px solid black;
-	font-size: 15pt;
+.subforumheader {
+    padding: 0.5%;
+    padding-left: 1%;
+    margin-top: none;
+    padding-bottom: none;
+    margin-bottom: 0.5%;
+    border: 1px solid black;
+    font-size: 15pt;
 }
-.subforumheadertitle{
-	display: inline;
-	font-weight: bold;
+.subforumheadertitle {
+    display: inline;
+    font-weight: bold;
 }
-.subforumheaderdesc{
-	display: inline;
+.subforumheaderdesc {
+    display: inline;
 }
-.post{
-	padding: 1%;
-	border-bottom: 1px solid gray;
+.post {
+    padding: 1%;
+    border-bottom: 1px solid gray;
 }
 .posttitle {
     margin-bottom: 0.5%;
@@ -107,31 +108,31 @@
 .postinginfo {
     font-size: 11pt;
 }
-#nolinks{
-	text-decoration: none;
+#nolinks {
+    text-decoration: none;
 }
-.noposts{
-	padding: 1%;
+.noposts {
+    padding: 1%;
 }
-.subsubforums{
-	border: 1px solid black;
-	padding: 0.5%;
-	margin-top: 0.5%;
-	padding-left: 1%;
+.subsubforums {
+    border: 1px solid black;
+    padding: 0.5%;
+    margin-top: 0.5%;
+    padding-left: 1%;
 }
-.subsubforumtitle{
-	font-weight: bolder;
-	text-decoration: none;
-	font-size: 14pt;
+.subsubforumtitle {
+    font-weight: bolder;
+    text-decoration: none;
+    font-size: 14pt;
 }
-.subsubforumdesc{
-	font-style: italic;
-	font-size: 12pt;
+.subsubforumdesc {
+    font-style: italic;
+    font-size: 12pt;
 }
-.toplevelinfo{
-	padding: 0.5%;
-	font-weight: bold;
-	margin-top: 0; /* Add this line to remove any top margin */
+.toplevelinfo {
+    padding: 0.5%;
+    font-weight: bold;
+    margin-top: 0; /* Add this line to remove any top margin */
 }
 .actualpost {
     padding: 1%;
@@ -154,8 +155,8 @@
     font-size: 11pt;
 }
 
-.whitespace{
-	white-space: pre-line;
+.whitespace {
+    white-space: pre-line;
 }
 .comments {
     padding: 1%;
@@ -167,24 +168,34 @@
     padding: 1% 0;  /* Add vertical padding but remove horizontal padding */
 }
 
-.commentuser{
-	display: inline;
-	font-weight: bold;
+.commentuser {
+    display: inline;
+    font-weight: bold;
 }
-.commentcontent{
-	display: inline;
+.commentcontent {
+    display: inline;
 }
-.commenttime{
-	font-size: 11pt;
+.commenttime {
+    font-size: 11pt;
 }
 
 
-.addcomment{
-	display: none;
-	margin-right: auto;
-	margin-left: auto;
-	text-align: center;
+.addcomment {
+    display: none;
+    margin-right: auto;
+    margin-left: auto;
+    text-align: center;
 }
-.varwidth{
-	width: 50%;
+.varwidth {
+    width: 50%;
+}
+
+/* Add link styling but exclude landing page */
+.content a:not(.landing-page a) {
+    color: #24b3af;
+    text-decoration: none;
+}
+
+.content a:not(.landing-page a):hover {
+    text-decoration: underline;
 }
