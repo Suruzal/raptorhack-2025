@@ -1,6 +1,3 @@
-# NOTE: If you get "no such table: subforum", make sure to run db.create_all() after importing all models.
-# This is usually handled in your app's __init__.py or app.py.
-
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 from . import db
@@ -20,13 +17,19 @@ class User(UserMixin, db.Model):
     major = db.Column(db.String(64))  # Made nullable by removing nullable=False
     is_admin = db.Column(db.Boolean, default=False)
     karma = db.Column(db.Integer, default=10)
-    total_karma = db.Column(db.Integer, default=10)
-    
+    total_karma = db.Column(db.Integer, default=10)  # Changed from 1337 to 10
+    rating = db.Column(db.Float, nullable=False, default=5.0)
+    # Add relationship to posts
+    posts = db.relationship('Post', backref='author', lazy='dynamic')
+
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
 
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
+
+    def get_rating_fraction(self):
+        return f"{self.rating:.1f}/5"
 
 # --- Subforum model (supports hierarchy) ---
 class Subforum(db.Model):
@@ -42,9 +45,8 @@ class Subforum(db.Model):
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(140), nullable=False)
-    content = db.Column(db.Text, nullable=False)
-    created_at = db.Column(db.DateTime, default=datetime.datetime.utcnow)
-    updated_at = db.Column(db.DateTime, onupdate=datetime.datetime.utcnow)
+    content = db.Column(db.String(5000), nullable=False)
+    created_at = db.Column(db.DateTime, nullable=False, default=datetime.datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     subforum_id = db.Column(db.Integer, db.ForeignKey('subforum.id'), nullable=False)
     comments = db.relationship("Comment", backref="post", lazy="dynamic")

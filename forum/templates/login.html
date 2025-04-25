@@ -29,32 +29,22 @@
         .focus-visible\:outline-indigo-600:focus-visible {
             outline-color: #24b3af !important;
         }
+        .fade-out {
+            opacity: 0;
+            transition: opacity 0.3s ease-out;
+        }
+        .fade-in {
+            opacity: 1;
+            transition: opacity 0.3s ease-in;
+        }
+        .hidden {
+            display: none;
+        }
     </style>
 </head>
 
-<div class="loginbox">
-	<h3>Login to Account</h3>
-	<form action="/action_login" method="POST">
-	<input class="loginelement" type="text" placeholder="Username" name="username"><br>
-	<input class="loginelement" type="password" placeholder="Password" name="password"><br>
-	<input class="loginelement" type="submit" value="Login">
-	</form>
-</div>
-<br><br>
-<div class="loginbox">
-    <h3>Create Account</h3>
-    <form action="/action_createaccount" method="POST">
-        <input class="loginelement" type="email" placeholder="Email" name="email"><br>
-        <input class="loginelement" type="text" placeholder="Username" name="username"><br>
-        <input class="loginelement" type="text" placeholder="Major" name="major"><br>
-        <input class="loginelement" type="password" placeholder="Password" name="password"><br>
-        <input class="loginelement" type="submit" value="Create">
-    </form>
-</div>
-
-<div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+<div id="login-section" class="fade-in flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
 	<div class="sm:mx-auto sm:w-full sm:max-w-sm">
-	  <img class="mx-auto h-16 w-auto" src="BarterNoBG.png" alt="BarterBoard">
 	  <h2 class="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900">Sign in to your account</h2>
 	</div>
   
@@ -86,10 +76,82 @@
   
 	  <p class="mt-10 text-center text-sm/6 text-gray-500">
 		Not a member?
-		<a href="CozyBearsRegistration.html" class="font-semibold text-indigo-600 hover:text-indigo-500">Sign up now</a>
+		<a href="#" onclick="toggleForms(event)" class="font-semibold text-indigo-600 hover:text-indigo-500">Sign up now</a>
 	  </p>
 	</div>
   </div>
 
+<div id="create-account-section" class="hidden fade-out flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+    <div class="sm:mx-auto sm:w-full sm:max-w-sm">
+        <h2 class="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900">Create your account</h2>
+    </div>
+    <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+        <form class="space-y-6" action="/action_createaccount" method="POST">
+            <div>
+                <label for="email" class="block text-sm/6 font-medium text-gray-900">Email</label>
+                <div class="mt-2">
+                    <input type="email" name="email" id="email" autocomplete="email" required class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
+                </div>
+            </div>
+            <div>
+                <label for="create-username" class="block text-sm/6 font-medium text-gray-900">Username</label>
+                <div class="mt-2">
+                    <input type="text" name="username" id="create-username" autocomplete="username" required class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
+                </div>
+            </div>
+            <div>
+                <label for="major" class="block text-sm/6 font-medium text-gray-900">Major</label>
+                <div class="mt-2">
+                    <input type="text" name="major" id="major" required class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
+                </div>
+            </div>
+            <div>
+                <label for="create-password" class="block text-sm/6 font-medium text-gray-900">Password</label>
+                <div class="mt-2">
+                    <input type="password" name="password" id="create-password" autocomplete="new-password" required class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
+                </div>
+            </div>
+            <div>
+                <button type="submit" class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white">Create Account</button>
+            </div>
+        </form>
+        <p class="mt-10 text-center text-sm/6 text-gray-500">
+            Already have an account?
+            <a href="#" onclick="toggleForms(event)" class="font-semibold text-indigo-600 hover:text-indigo-500">Sign in</a>
+        </p>
+    </div>
+</div>
+
+<script>
+function toggleForms(event) {
+    event.preventDefault();
+    const loginSection = document.getElementById('login-section');
+    const createSection = document.getElementById('create-account-section');
+    
+    if (loginSection.classList.contains('fade-in')) {
+        loginSection.classList.remove('fade-in');
+        loginSection.classList.add('fade-out');
+        setTimeout(() => {
+            loginSection.classList.add('hidden');
+            createSection.classList.remove('hidden');
+            setTimeout(() => {
+                createSection.classList.remove('fade-out');
+                createSection.classList.add('fade-in');
+            }, 50);
+        }, 300);
+    } else {
+        createSection.classList.remove('fade-in');
+        createSection.classList.add('fade-out');
+        setTimeout(() => {
+            createSection.classList.add('hidden');
+            loginSection.classList.remove('hidden');
+            setTimeout(() => {
+                loginSection.classList.remove('fade-out');
+                loginSection.classList.add('fade-in');
+            }, 50);
+        }, 300);
+    }
+}
+</script>
 
 {% endblock %}

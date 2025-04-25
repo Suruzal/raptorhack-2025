@@ -8,6 +8,8 @@ def update_existing_users():
         for user in users:
             if user.karma is None:
                 user.karma = 10
+            if user.rating is None:
+                user.rating = 5.0
         db.session.commit()
 
 if __name__ == '__main__':

@@ -1,8 +1,5 @@
 {% extends 'layout.html' %}
 {% block body %}
-<div class="toplevelinfo">
-    All Posts
-</div>
 {% if posts %}
     {% for post in posts %}
         <div class="post">
@@ -10,26 +7,26 @@
                 <a href="/viewpost?post={{ post.id }}">{{ post.title }}</a>
             </div>
             <div class="postusername">
-                by <b {% if post.author.admin %} style="color: red;" {% endif %}>{{ post.author.username }}</b>
+                <b>by</b> <b {% if post.author.admin %} style="color: red;" {% endif %}>{{ post.author.username }}</b>
                 <div class="inline-flex items-center gap-1 ml-2">
                     <img class="h-4 w-4" src="{{ url_for('static', filename='images/KarmaIcon.png') }}" alt="Karma">
                     <span class="text-sm text-gray-600">{{ post.author.total_karma }}</span>
                 </div>
+                <div class="flex items-center gap-1 mt-1 ml-2">
+                    <span class="text-sm text-gray-600">{{ post.author.major }} Major • Rating: {{ post.author.get_rating_fraction() }}</span>
+                </div>
                 <div class="date">
-                    {{ post.get_time_string() }}
+                    <b>{{ post.get_time_string() }}</b>
                 </div>
             </div>
             <div class="postcontent">
                 {{ post.content[:200] }}{% if post.content|length > 200 %}...{% endif %}
             </div>
-            <div class="postsubforum">
-                in <a href="/subforum?sub={{ post.subforum.id }}">{{ post.subforum.name }}</a>
-            </div>
         </div>
     {% endfor %}
 {% else %}
     <div class="noposts">
-        <b>There are no posts yet.</b>
+        <b>Something has gone wrong. Please try again in a bit.</b>
     </div>
 {% endif %}
 {% endblock %}

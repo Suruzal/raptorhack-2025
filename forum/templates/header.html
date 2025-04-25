@@ -51,8 +51,8 @@
                     <div class="md:block">
                         <!-- Desktop navigation -->
                         <div class="ml-10 flex items-baseline space-x-4">
-                            <a href="/home" class="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white" aria-current="page">The Barter Board</a>
-                            <a href="/create" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Create Barter</a>
+                            <a href="/home" class="rounded-md {% if request.path == '/home' %}bg-gray-900 text-white{% else %}text-gray-300 hover:bg-gray-700 hover:text-white{% endif %} px-3 py-2 text-sm font-medium" {% if request.path == '/home' %}aria-current="page"{% endif %}>The Barter Board</a>
+                            <a href="/addpost" class="rounded-md {% if request.path == '/addpost' %}bg-gray-900 text-white{% else %}text-gray-300 hover:bg-gray-700 hover:text-white{% endif %} px-3 py-2 text-sm font-medium" {% if request.path == '/addpost' %}aria-current="page"{% endif %}>Create Barter</a>
                         </div>
                     </div>
                 </div>
@@ -81,7 +81,7 @@
                                 <a href="/action_logout" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1">Sign out</a>
                             </div>
                             {% else %}
-                            <a href="/loginform" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Log in</a>
+                            <a href="/loginform" class="rounded-md {% if request.path == '/loginform' %}bg-gray-900 text-white{% else %}text-gray-300 hover:bg-gray-700 hover:text-white{% endif %} px-3 py-2 text-sm font-medium" {% if request.path == '/loginform' %}aria-current="page"{% endif %}>Log in</a>
                             {% endif %}
                         </div>
                     </div>

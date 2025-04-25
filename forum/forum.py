@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, Blueprint, url_for, jsonify
+from flask import render_template, request, redirect, Blueprint, url_for, jsonify, current_app, flash
 from flask_login import login_required, current_user, logout_user, login_user
 import datetime
 from . import db, login_manager
@@ -25,9 +25,31 @@ def inject_user():
 def landing():
     return render_template("landing.html")
 
+@bp.route('/addpost')
+def addpost():
+    if not current_user.is_authenticated:
+        return redirect(url_for('main.loginform'))
+    
+    try:
+        subforum = Subforum.query.filter_by(id=1).first()
+        if not subforum:
+            # Initialize if missing
+            subforum = init_site()
+            db.session.commit()
+            
+        if not subforum:
+            raise Exception("Failed to initialize main subforum")
+            
+        return render_template("createpost.html", subforum=subforum)
+        
+    except Exception as e:
+        db.session.rollback()
+        current_app.logger.error(f"Error in addpost: {e}")
+        return error("System error. Please contact administrator.")
+
 @bp.route('/home')
 def home():
-    posts = Post.query.order_by(Post.id.desc()).all()
+    posts = Post.query.order_by(Post.created_at.desc()).all()
     return render_template("allposts.html", posts=posts)
 
 @bp.route('/subforum')
@@ -44,16 +66,6 @@ def subforum():
 @bp.route('/loginform')
 def loginform():
     return render_template("login.html")
-
-@bp.route('/addpost')
-def addpost():
-    subforum_id = int(request.args.get("sub"))
-    subforum = Subforum.query.filter(Subforum.id == subforum_id).first()
-    if not subforum:
-        return error("That subforum does not exist!")
-    if not current_user.is_authenticated:
-        return redirect(url_for('main.loginform'))
-    return render_template("createpost.html", subforum=subforum)
 
 @login_required
 @bp.route('/viewpost')
@@ -86,38 +98,45 @@ def comment():
     db.session.commit()
     return redirect("/viewpost?post=" + str(post_id))
 
-@login_required
 @bp.route('/action_post', methods=['POST'])
+@login_required
 def action_post():
-    subforum_id = int(request.args.get("sub"))
-    subforum = Subforum.query.filter(Subforum.id == subforum_id).first()
-    if not subforum:
-        return redirect(url_for("subforums"))
+    try:
+        # Always use the main forum (id=1) for posts
+        subforum = Subforum.query.filter_by(id=1).first()
+        if not subforum:
+            return error("System is not properly initialized!")
 
-    user = current_user
-    title = request.form['title']
-    content = request.form['content']
-    #check for valid posting
-    errors = []
-    retry = False
-    if not valid_title(title):
-        errors.append("Title must be between 4 and 140 characters long!")
-        retry = True
-    if not valid_content(content):
-        errors.append("Post must be between 10 and 5000 characters long!")
-        retry = True
-    if retry:
-        return render_template("createpost.html",subforum=subforum,  errors=errors)
-    post = Post(
-        title=title,
-        content=content,
-        user_id=user.id,
-        subforum_id=subforum.id,
-        created_at=datetime.datetime.now()
-    )
-    db.session.add(post)
-    db.session.commit()
-    return redirect("/viewpost?post=" + str(post.id))
+        title = request.form['title']
+        content = request.form['content']
+        
+        # Validation checks
+        if not title or len(title) < 4 or len(title) > 140:
+            flash('Title must be between 4 and 140 characters.')
+            return redirect(url_for('main.addpost'))
+            
+        if not content or len(content) < 10 or len(content) > 5000:
+            flash('Content must be between 10 and 5000 characters.')
+            return redirect(url_for('main.addpost'))
+
+        post = Post(
+            title=title,
+            content=content,
+            user_id=current_user.id,
+            subforum_id=subforum.id,
+            created_at=datetime.datetime.now()
+        )
+        
+        db.session.add(post)
+        db.session.commit()
+        
+        return redirect(url_for('main.viewpost', post=post.id))
+        
+    except Exception as e:
+        db.session.rollback()
+        current_app.logger.error(f"Error creating post: {e}")
+        flash('An error occurred while creating your post.')
+        return redirect(url_for('main.addpost'))
 
 @bp.route('/action_login', methods=['POST'])
 def action_login():

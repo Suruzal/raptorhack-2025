@@ -42,7 +42,8 @@
 	margin-left: auto;
 	margin-right: auto;
 	text-align: center;
-
+	padding-top: 3%;
+	width: 80%;  /* Added to ensure content is centered */
 }
 .subforumlisting{
 	border-bottom: 1px solid gray;
@@ -90,18 +91,24 @@
 	padding: 1%;
 	border-bottom: 1px solid gray;
 }
-.postusername{
-	font-style: italic;
-	font-size: 12pt;
+.posttitle {
+    margin-bottom: 0.5%;
+    font-size: 16pt;  /* Increased from default */
 }
-.subforumheaderlink{
-	font-style: italic;
-	font-size: 12pt;
-	margin-top: 0.5%;
+
+.postusername {
+    font-size: 12pt;
+    /* Removed font-style: italic; */
 }
-.postinginfo{
-	font-size: 11pt;
-	font-style: italic;
+
+.subforumheaderlink {
+    font-size: 12pt;
+    /* Removed font-style: italic; */
+}
+
+.postinginfo {
+    font-size: 11pt;
+    /* Removed font-style: italic; */
 }
 #nolinks{
 	text-decoration: none;
