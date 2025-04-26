@@ -70,6 +70,20 @@ class Comment(db.Model):
             return self.created_at.strftime("%Y-%m-%d %H:%M")
         return ""
 
+# --- Transaction model ---
+class Transaction(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    sender_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    recipient_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    amount = db.Column(db.Integer, nullable=False)
+    rating = db.Column(db.Float, nullable=False)
+    comment = db.Column(db.Text, nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.datetime.utcnow)
+    
+    # Add relationships
+    sender = db.relationship('User', foreign_keys=[sender_id], backref='sent_transactions')
+    recipient = db.relationship('User', foreign_keys=[recipient_id], backref='received_transactions')
+
 # --- Validation helpers ---
 def username_taken(username):
     return db.session.query(User.id).filter_by(username=username).first() is not None

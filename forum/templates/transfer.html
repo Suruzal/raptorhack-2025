@@ -1,0 +1,106 @@
+{% extends 'layout.html' %}
+{% block body %}
+
+<div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+    <div class="sm:mx-auto sm:w-full sm:max-w-sm">
+        <h2 class="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900">Transfer Karma</h2>
+    </div>
+
+    {% if errors %}
+    <div class="mt-4 sm:mx-auto sm:w-full sm:max-w-sm">
+        {% for error in errors %}
+        <div class="text-red-500 text-sm text-center">{{ error }}</div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+        <form id="transferForm" class="space-y-6" action="/process_transfer" method="POST">
+            <div>
+                <label for="username" class="block text-sm/6 font-medium text-gray-900">Recipient Username</label>
+                <div class="mt-2">
+                    <input type="text" name="username" id="username" required 
+                        class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-[#24b3af] sm:text-sm/6">
+                </div>
+            </div>
+
+            <div>
+                <label for="karma_amount" class="block text-sm/6 font-medium text-gray-900">Karma Amount</label>
+                <div class="mt-2">
+                    <input type="number" name="karma_amount" id="karma_amount" min="1" max="{{ current_user.karma }}" required
+                        class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-[#24b3af] sm:text-sm/6">
+                </div>
+            </div>
+
+            <div>
+                <label for="rating" class="block text-sm/6 font-medium text-gray-900">Rating (1-5)</label>
+                <div class="mt-2">
+                    <select name="rating" id="rating" required
+                        class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-[#24b3af] sm:text-sm/6">
+                        <option value="5">5 - Excellent</option>
+                        <option value="4">4 - Very Good</option>
+                        <option value="3">3 - Good</option>
+                        <option value="2">2 - Fair</option>
+                        <option value="1">1 - Poor</option>
+                    </select>
+                </div>
+            </div>
+
+            <div>
+                <label for="comment" class="block text-sm/6 font-medium text-gray-900">Transaction Comment</label>
+                <div class="mt-2">
+                    <textarea name="comment" id="comment" rows="3" required
+                        class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-[#24b3af] sm:text-sm/6"></textarea>
+                </div>
+            </div>
+
+            <div>
+                <button type="button" onclick="confirmTransfer()"
+                    class="flex w-full justify-center rounded-md bg-[#24b3af] px-3 py-1.5 text-sm/6 font-semibold text-white hover:bg-[#1e9691]">
+                    Complete Transaction
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Confirmation Modal -->
+<div id="confirmationModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center">
+    <div class="bg-white p-8 rounded-lg max-w-md w-full mx-4">
+        <h3 class="text-lg font-semibold mb-4">Confirm Transaction</h3>
+        <p id="confirmationText" class="text-gray-600 mb-6"></p>
+        <div class="flex gap-4 justify-end">
+            <button onclick="closeModal()" 
+                class="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-md">
+                Cancel
+            </button>
+            <button onclick="submitTransfer()"
+                class="px-4 py-2 text-sm font-medium text-white bg-[#24b3af] hover:bg-[#1e9691] rounded-md">
+                Confirm
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+function confirmTransfer() {
+    const username = document.getElementById('username').value;
+    const amount = document.getElementById('karma_amount').value;
+    const rating = document.getElementById('rating').value;
+    
+    document.getElementById('confirmationText').textContent = 
+        `Are you sure you want to transfer ${amount} karma to ${username} with a rating of ${rating}/5?`;
+    
+    document.getElementById('confirmationModal').classList.remove('hidden');
+}
+
+function closeModal() {
+    document.getElementById('confirmationModal').classList.add('hidden');
+}
+
+function submitTransfer() {
+    document.getElementById('transferForm').submit();
+}
+</script>
+
+{% endblock %}

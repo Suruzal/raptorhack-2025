@@ -194,23 +194,101 @@ def action_createaccount():
     login_user(user)
     return redirect("/home")
 
-@bp.route('/transfer_karma', methods=['POST'])
+@bp.route('/transfer')
 @login_required
-def transfer_karma():
+def transfer():
+    return render_template('transfer.html')
+
+@bp.route('/process_transfer', methods=['POST'])
+@login_required
+def process_transfer():
     try:
-        recipient_id = int(request.form['recipient_id'])
-        amount = int(request.form['amount'])
+        username = request.form.get('username')
+        karma_amount = request.form.get('karma_amount')
+        rating = request.form.get('rating')
+        comment = request.form.get('comment')
         
-        recipient = User.query.get(recipient_id)
-        if not recipient:
-            return jsonify({'error': 'User not found'}), 404
+        errors = []
+        
+        # Input validation
+        if not all([username, karma_amount, rating, comment]):
+            errors.append("All fields are required")
+            return render_template('transfer.html', errors=errors)
             
-        if current_user.transfer_karma(recipient, amount):
-            return jsonify({'success': True})
-        else:
-            return jsonify({'error': 'Insufficient karma'}), 400
-    except:
-        return jsonify({'error': 'Invalid request'}), 400
+        try:
+            karma_amount = int(karma_amount)
+            rating = float(rating)  # Keep as float instead of converting to int
+        except (TypeError, ValueError):
+            errors.append("Invalid karma amount or rating value")
+            return render_template('transfer.html', errors=errors)
+            
+        if karma_amount <= 0:
+            errors.append("Karma amount must be positive")
+            return render_template('transfer.html', errors=errors)
+            
+        if rating < 1.0 or rating > 5.0:
+            errors.append("Rating must be between 1 and 5")
+            return render_template('transfer.html', errors=errors)
+
+        # Validate recipient exists
+        recipient = User.query.filter_by(username=username).first()
+        if not recipient:
+            errors.append("Recipient username not found")
+            return render_template('transfer.html', errors=errors)
+        
+        if recipient.id == current_user.id:
+            errors.append("Cannot transfer karma to yourself")
+            return render_template('transfer.html', errors=errors)
+            
+        # Check karma amount
+        if karma_amount > current_user.karma:
+            errors.append("Insufficient karma balance")
+            return render_template('transfer.html', errors=errors)
+
+        # Start transaction block
+        try:
+            # Update sender's karma (current only)
+            current_user.karma -= karma_amount
+            
+            # Update recipient's karma (both current and total)
+            recipient.karma += karma_amount
+            recipient.total_karma += karma_amount
+            
+            # Update recipient's rating - calculate weighted average
+            if recipient.rating is None:
+                recipient.rating = float(rating)
+            else:
+                # Get current total stars and count
+                current_total = recipient.rating * 5  # Assuming rating is out of 5
+                # Add new rating
+                new_total = current_total + rating
+                # Update to new average
+                recipient.rating = new_total / 6  # (5 + 1 new rating)
+            
+            # Create transaction record
+            transaction = Transaction(
+                sender_id=current_user.id,
+                recipient_id=recipient.id,
+                amount=karma_amount,
+                rating=rating,
+                comment=comment,
+                created_at=datetime.datetime.now()  # Add timestamp
+            )
+            
+            db.session.add(transaction)
+            db.session.commit()
+            
+            return redirect('/home')
+            
+        except Exception as e:
+            db.session.rollback()
+            current_app.logger.error(f"Transfer failed: {str(e)}")
+            errors.append("Transaction failed, please try again")
+            return render_template('transfer.html', errors=errors)
+            
+    except Exception as e:
+        current_app.logger.error(f"Transfer error: {str(e)}")
+        return render_template('transfer.html', errors=["An unexpected error occurred"])
 
 def error(errormessage):
     return "<b style=\"color: red;\">" + errormessage + "</b>"
