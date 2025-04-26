@@ -24,6 +24,30 @@
         * {
             font-family: 'Inter', sans-serif;
         }
+        html, body {
+            height: 100%;
+        }
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            animation: fadeIn 0.4s ease-in forwards;
+            background-color: #fde7c4;
+        }
+        .main-content {
+            flex: 1 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+        .bg-brown {
+            background-color: #fde7c4;
+        }
+        .text-gray-900 {
+            color: #37272f !important;
+        }
+        .text-gray-500 {
+            color: #37272f !important;
+        }
         @keyframes fadeIn {
             0% { opacity: 0; background-color: white; }
             100% { opacity: 1; background-color: #fde7c4; }
@@ -40,24 +64,14 @@
             background: radial-gradient(circle at 50% 50%, rgba(36, 179, 175, 0.8), rgba(168, 170, 139, 0.3));
             filter: blur(100px);
         }
-
-        body {
-            animation: fadeIn 0.4s ease-in forwards;
-            background-color: #fde7c4;
-        }
-        .bg-brown {
-            background-color: #fde7c4;
-        }
-        .text-gray-900 {
-            color: #37272f !important;
-        }
-        .text-gray-500 {
-            color: #37272f !important;
+        footer {
+            flex-shrink: 0;
+            margin-top: 0 !important;
         }
     </style>
 </head>
 <body>
-    <div class="bg-brown">
+    <div class="bg-brown flex flex-col min-h-screen">
         <header class="absolute inset-x-0 top-0 z-50">
             <nav class="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
                 <div class="flex lg:flex-1">
@@ -116,6 +130,7 @@
             </div>
         </header>
 
+<<<<<<< HEAD
         <div class="relative isolate px-6 pt-14 lg:px-8">
           <div class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80" aria-hidden="true">
             <div class="aurora-bg relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]" style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)"></div>
@@ -124,39 +139,26 @@
             <div class="text-center">
               <h1 class="text-5xl font-semibold tracking-tight text-balance text-gray-900 sm:text-7xl">Trade Brains, Get Gains.</h1>
               <p class="mt-8 text-lg font-medium text-pretty text-gray-500 sm:text-xl/8">BarterBoard connects students to swap academic skills, rate each other, and build a trusted network of peer support — because learning is better when it's shared.</p>
+=======
+        <!-- Aurora backgrounds moved inside main-content -->
+        <div class="main-content flex-1 flex flex-col" style="padding-bottom: 7%;">
+            <div class="relative isolate px-6 pt-14 lg:px-8 flex-1 flex flex-col">
+                <div class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80" aria-hidden="true">
+                    <div class="aurora-bg relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]" style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)"></div>
+                </div>
+                <div class="mx-auto max-w-2xl py-18 sm:py-48 lg:py-40">
+                    <div class="text-center">
+                      <h1 class="text-5xl font-semibold tracking-tight text-balance text-gray-900 sm:text-7xl">Trade Brains, Get Gains.</h1>
+                      <p class="mt-8 text-lg font-medium text-pretty text-gray-500 sm:text-xl/8">BarterBoard connects students to swap academic skills, rate each other, and build a trusted network of peer support — because learning is better when it's shared.</p>
+>>>>>>> db1abb2f41c1c80d87f16054288e8ad01fca7892
 <div class="mt-10 flex items-center justify-center">
   <a href="/home" class="rounded-md bg-[#24b3af] px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-[#1e9691] hover:underline hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#24b3af]">Get started</a>
 </div>
-              <div class="mt-10 flex items-center justify-center gap-x-6">
-              </div>
-            </div>
-          </div>
-          <div class="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]" aria-hidden="true">
-            <div class="aurora-bg relative left-[calc(50%+3rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 sm:left-[calc(50%+36rem)] sm:w-[72.1875rem]" style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)"></div>
-          </div>
-
-<!--Bento Boxes-->
-
-  <div class="mx-auto max-w-2xl px-6 lg:max-w-7xl lg:px-8">
-    <h2 class="text-center text-base/7 font-semibold text-[#24b3af]">Only the best</h2>
-    <p class="mx-auto mt-2 max-w-lg text-center text-4xl font-semibold tracking-tight text-balance text-gray-900 sm:text-5xl">All your learning needs, in one place</p>
-    <div class="mt-10 grid gap-4 sm:mt-16 lg:grid-cols-3 lg:grid-rows-2">
-      <div class="relative lg:row-span-2">
-        <div class="absolute inset-px rounded-lg bg-white lg:rounded-l-[2rem]"></div>
-        <div class="relative flex h-full flex-col overflow-hidden rounded-[calc(var(--radius-lg)+1px)] lg:rounded-l-[calc(2rem+1px)]">
-          <div class="px-8 pt-8 pb-3 sm:px-10 sm:pt-10 sm:pb-0">
-            <p class="mt-2 text-lg font-medium tracking-tight text-gray-950 max-lg:text-center">Tutors Approve</p>
-            <p class="mt-2 max-w-lg text-sm/6 text-gray-600 max-lg:text-center">BarterBoard is a well respected tutoring platform that respects its tutors and tries to uphold their integrity and time, resulting in a safe and positive learning environment</p>
-          </div>
-          <div class="@container relative min-h-[30rem] w-full grow max-lg:mx-auto max-lg:max-w-sm">
-            <div class="absolute inset-x-6 top-6 bottom-0 overflow-hidden rounded-lg border-2 border-gray-700 bg-gray-900 shadow-2xl">
-              <!-- Monitor top bar with buttons -->
-              <div class="flex items-center bg-gray-800 px-4 py-2">
-                <div class="flex gap-2">
-                  <div class="h-3 w-3 rounded-full bg-red-500"></div>
-                  <div class="h-3 w-3 rounded-full bg-yellow-500"></div>
-                  <div class="h-3 w-3 rounded-full bg-green-500"></div>
+                      <div class="mt-10 flex items-center justify-center gap-x-6">
+                      </div>
+                    </div>
                 </div>
+<<<<<<< HEAD
               </div>
               <div class="px-6 pt-6 pb-14">
                 <!-- Replace the comment with the image -->
@@ -214,16 +216,99 @@
                 <!-- Replace the comment with the image -->
                 <img class="h-full w-full object-cover object-[center_top]" src="{{ url_for('static', filename='images/TransferPage.png') }}" alt="Transfer Page Example">
               </div>
+=======
+                <div class="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]" aria-hidden="true">
+                    <div class="aurora-bg relative left-[calc(50%+3rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 sm:left-[calc(50%+36rem)] sm:w-[72.1875rem]" style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)"></div>
+                </div>
+
+                <!--Bento Boxes-->
+
+                <div class="mx-auto max-w-2xl px-6 lg:max-w-7xl lg:px-8">
+                    <h2 class="text-center text-base/7 font-semibold text-[#24b3af]">Only the best</h2>
+                    <p class="mx-auto mt-2 max-w-lg text-center text-4xl font-semibold tracking-tight text-balance text-gray-900 sm:text-5xl">All your learning needs, in one place</p>
+                    <div class="mt-10 grid gap-4 sm:mt-16 lg:grid-cols-3 lg:grid-rows-2">
+                        <div class="relative lg:row-span-2">
+                            <div class="absolute inset-px rounded-lg bg-white lg:rounded-l-[2rem]"></div>
+                            <div class="relative flex h-full flex-col overflow-hidden rounded-[calc(var(--radius-lg)+1px)] lg:rounded-l-[calc(2rem+1px)]">
+                                <div class="px-8 pt-8 pb-3 sm:px-10 sm:pt-10 sm:pb-0">
+                                    <p class="mt-2 text-lg font-medium tracking-tight text-gray-950 max-lg:text-center">Tutors Approve</p>
+                                    <p class="mt-2 max-w-lg text-sm/6 text-gray-600 max-lg:text-center">BarterBoard is a well respected tutoring platform that respects its tutors and tries to uphold their integrity and time, resulting in a safe and positive learning environment</p>
+                                </div>
+                                <div class="@container relative min-h-[30rem] w-full grow max-lg:mx-auto max-lg:max-w-sm">
+                                    <div class="absolute inset-x-6 top-6 bottom-0 overflow-hidden rounded-lg border-2 border-gray-700 bg-gray-900 shadow-2xl">
+                                        <!-- Monitor top bar with buttons -->
+                                        <div class="flex items-center bg-gray-800 px-4 py-2">
+                                            <div class="flex gap-2">
+                                                <div class="h-3 w-3 rounded-full bg-red-500"></div>
+                                                <div class="h-3 w-3 rounded-full bg-yellow-500"></div>
+                                                <div class="h-3 w-3 rounded-full bg-green-500"></div>
+                                            </div>
+                                        </div>
+                                        <img class="h-full w-full object-cover object-[center_top]" src="{{ url_for('static', filename='images/HomePageSS.png') }}" alt="Tutors Homepage">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="pointer-events-none absolute inset-px rounded-lg shadow-sm ring-1 ring-black/5 lg:rounded-l-[2rem]"></div>
+                        </div>
+                        <div class="relative max-lg:row-start-2 lg:col-start-2 lg:row-start-1">
+                            <div class="absolute inset-px rounded-lg bg-white"></div>
+                            <div class="relative flex h-full flex-col overflow-hidden rounded-[calc(var(--radius-lg)+1px)]">
+                                <div class="px-8 pt-8 sm:px-10 sm:pt-10">
+                                    <p class="mt-2 text-lg font-medium tracking-tight text-gray-950 max-lg:text-center">Two Way Street</p>
+                                    <p class="mt-2 max-w-lg text-sm/6 text-gray-600 max-lg:text-center">BarterBoard runs on students being able to equally give as much as they recieve, and tries to create a community in which knowledge is shared as much as possible. The karma system enhances this unique trait of BarterBoard</p>
+                                </div>
+                            </div>
+                            <div class="pointer-events-none absolute inset-px rounded-lg shadow-sm ring-1 ring-black/5"></div>
+                        </div>
+                        <div class="relative max-lg:row-start-3 lg:col-start-2 lg:row-start-2">
+                            <div class="absolute inset-px rounded-lg bg-white"></div>
+                            <div class="relative flex h-full flex-col overflow-hidden rounded-[calc(var(--radius-lg)+1px)]">
+                                <div class="px-8 pt-8 sm:px-10 sm:pt-10">
+                                    <p class="mt-2 text-lg font-medium tracking-tight text-gray-950 max-lg:text-center">Karma</p>
+                                    <p class="mt-2 max-w-lg text-sm/6 text-gray-600 max-lg:text-center">
+                                      Karma is the currency that powers BarterBoard. This can be gained through tutoring and can be spent on tutoring sessions. This allows everyone to contribute to the BarterBoard system and learning environment.
+                                    </p>
+                                </div>
+                                <div>
+                                </div>
+                                <!-- Add Karma Icon at the bottom -->
+                                <div class="flex justify-center mt-auto mb-6">
+                                    <img src="{{ url_for('static', filename='images/KarmaIcon.png') }}" alt="Karma Icon" class="h-24 w-24">
+                                </div>
+                            </div>
+                            <div class="pointer-events-none absolute inset-px rounded-lg shadow-sm ring-1 ring-black/5"></div>
+                        </div>
+                        <div class="relative lg:row-span-2">
+                            <div class="absolute inset-px rounded-lg bg-white max-lg:rounded-b-[2rem] lg:rounded-r-[2rem]"></div>
+                            <div class="relative flex h-full flex-col overflow-hidden rounded-[calc(var(--radius-lg)+1px)] max-lg:rounded-b-[calc(2rem+1px)] lg:rounded-r-[calc(2rem+1px)]">
+                                <div class="px-8 pt-8 pb-3 sm:px-10 sm:pt-10 sm:pb-0">
+                                    <p class="mt-2 text-lg font-medium tracking-tight text-gray-950 max-lg:text-center">Loved by Students</p>
+                                    <p class="mt-2 max-w-lg text-sm/6 text-gray-600 max-lg:text-center">BarterBoard opens itself to students as much as tutors fostering a great space to learn and give knowledge.</p>
+                                </div>
+                                <div class="relative min-h-[30rem] w-full grow">
+                                    <div class="absolute top-10 right-0 bottom-0 left-10 overflow-hidden rounded-tl-xl bg-gray-900 shadow-2xl">
+                                        <div class="flex bg-gray-800/40 ring-1 ring-white/5">
+                                            <div class="-mb-px flex text-sm/6 font-medium text-gray-400">
+                                                <div class="border-r border-b border-r-white/10 border-b-white/20 bg-white/5 px-4 py-2 text-white">NotificationSetting.jsx</div>
+                                                <div class="border-r border-gray-600/10 px-4 py-2">App.jsx</div>
+                                            </div>
+                                        </div>
+                                        <div class="px-6 pt-6 pb-14">
+                                          <!-- Your code example -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="pointer-events-none absolute inset-px rounded-lg shadow-sm ring-1 ring-black/5 max-lg:rounded-b-[2rem] lg:rounded-r-[2rem]"></div>
+                        </div>
+                    </div>
+                </div>
+>>>>>>> db1abb2f41c1c80d87f16054288e8ad01fca7892
             </div>
-          </div>
         </div>
-        <div class="pointer-events-none absolute inset-px rounded-lg shadow-sm ring-1 ring-black/5 max-lg:rounded-b-[2rem] lg:rounded-r-[2rem]"></div>
-      </div>
+        <footer class="bg-gray-800 text-white h-16 flex items-center justify-center font-['Inter'] w-full text-center" style="margin-top:0;">
+            <p class="w-full">Created by <a href="https://github.com/Suruzal" class="text-[#24b3af] hover:underline" target="_blank" rel="noopener noreferrer">Suruzal</a> for RaptorHack 2025</p>
+        </footer>
     </div>
-  </div>
-</div>
-<footer class="bg-gray-800 text-white h-16 flex items-center justify-center font-['Inter'] w-full text-center mt-[1%]">
-    <p class="w-full">Created by <a href="https://github.com/Suruzal" class="text-[#24b3af] hover:underline" target="_blank" rel="noopener noreferrer">Suruzal</a> for RaptorHack 2025</p>
-</footer>
 </body>
 </html>
