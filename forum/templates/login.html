@@ -40,98 +40,116 @@
         .hidden {
             display: none;
         }
-        /* Add new size adjustments */
-        .text-scaled {
-            font-size: 1.6rem !important;
-            line-height: 2rem !important;
+        .scaled-input {
+            font-size: 1.25rem !important;
+            padding: 0.75rem 1rem !important;
+            line-height: 1.75rem !important;
         }
-        .text-scaled-lg {
-            font-size: 2rem !important;
-            line-height: 2.4rem !important;
+        .scaled-text {
+            font-size: 1.25rem !important;
+            line-height: 1.75rem !important;
         }
-        .text-scaled-xl {
-            font-size: 2.4rem !important;
-            line-height: 2.8rem !important;
+        .scaled-heading {
+            font-size: 2.25rem !important;
+            line-height: 2.5rem !important;
         }
-        .input-scaled {
-            padding: 0.8rem 1.2rem !important;
+        .scaled-button {
+            font-size: 1.25rem !important;
+            padding: 0.75rem 1.5rem !important;
         }
     </style>
 </head>
 
-<div id="login-section" class="fade-in flex min-h-full flex-col justify-center px-12 py-24 lg:px-16" style="padding-bottom: 40%">
-    <div class="sm:mx-auto sm:w-full sm:max-w-md"> <!-- Increased from sm:max-w-sm -->
-        <h2 class="mt-16 text-center text-6xl font-bold tracking-tight text-gray-900">Sign in to your account</h2>
+<div id="login-section" class="fade-in flex min-h-full flex-col justify-center px-8 py-16 lg:px-12" style="padding-bottom: 32%">
+    <div class="sm:mx-auto sm:w-full sm:max-w-md">
+        <h2 class="mt-12 text-center font-bold tracking-tight text-gray-900 scaled-heading">Sign in to your account</h2>
     </div>
-
-    <div class="mt-16 sm:mx-auto sm:w-full sm:max-w-md"> <!-- Increased from sm:max-w-sm -->
+  
+    <div class="mt-12 sm:mx-auto sm:w-full sm:max-w-md">
         <form class="space-y-8" action="/action_login" method="POST">
             <div>
-                <label for="username" class="block text-scaled-lg font-medium text-gray-900">Username</label>
+                <label for="username" class="block font-medium text-gray-900 scaled-text">Username</label>
                 <div class="mt-3">
-                    <input type="text" name="username" id="text" autocomplete="username" required class="block w-full rounded-lg bg-white input-scaled text-scaled text-gray-900 outline-2">
+                    <input type="text" name="username" id="text" autocomplete="username" required 
+                        class="block w-full rounded-lg bg-white scaled-input text-gray-900 outline-1 outline-gray-300 focus:outline-2 focus:outline-indigo-600">
                 </div>
             </div>
-            
+  
             <div>
                 <div class="flex items-center justify-between">
-                    <label for="password" class="block text-scaled-lg font-medium text-gray-900">Password</label>
-                    <div class="text-scaled">
-                        <a href="#" class="font-semibold text-indigo-600 hover:text-indigo-500">Forgot password?</a>
+                    <label for="password" class="block font-medium text-gray-900 scaled-text">Password</label>
+                    <div>
+                        <a href="#" class="font-semibold text-indigo-600 hover:text-indigo-500 scaled-text">Forgot password?</a>
                     </div>
                 </div>
                 <div class="mt-3">
-                    <input type="password" name="password" id="password" autocomplete="current-password" required class="block w-full rounded-lg bg-white input-scaled text-scaled text-gray-900 outline-2">
+                    <input type="password" name="password" id="password" autocomplete="current-password" required 
+                        class="block w-full rounded-lg bg-white scaled-input text-gray-900 outline-1 outline-gray-300 focus:outline-2 focus:outline-indigo-600">
                 </div>
             </div>
-
+  
             <div>
-                <button type="submit" class="flex w-full justify-center rounded-lg bg-indigo-600 px-6 py-3 text-scaled font-semibold text-white">Sign in</button>
+                <button type="submit" 
+                    class="flex w-full justify-center rounded-lg bg-indigo-600 text-white hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 scaled-button">
+                    Sign in
+                </button>
             </div>
         </form>
-
-        <p class="mt-16 text-center text-scaled text-gray-500">
+  
+        <p class="mt-12 text-center text-gray-500 scaled-text">
             Not a member?
-            <a href="#" onclick="toggleForms(event)" class="font-semibold text-scaled text-indigo-600 hover:text-indigo-500">Sign up now</a>
+            <a href="#" onclick="toggleForms(event)" class="font-semibold text-indigo-600 hover:text-indigo-500">Sign up now</a>
         </p>
     </div>
 </div>
 
-<div id="create-account-section" class="hidden fade-out flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
-    <div class="sm:mx-auto sm:w-full sm:max-w-sm">
-        <h2 class="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900">Create your account</h2>
+<div id="create-account-section" class="hidden fade-out flex min-h-full flex-col justify-center px-8 py-16 lg:px-12" style="padding-bottom: 32%">
+    <div class="sm:mx-auto sm:w-full sm:max-w-md">
+        <h2 class="mt-12 text-center font-bold tracking-tight text-gray-900 scaled-heading">Create your account</h2>
     </div>
-    <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-        <form class="space-y-6" action="/action_createaccount" method="POST">
+    <div class="mt-12 sm:mx-auto sm:w-full sm:max-w-md">
+        <form class="space-y-8" action="/action_createaccount" method="POST">
             <div>
-                <label for="email" class="block text-sm/6 font-medium text-gray-900">Email</label>
-                <div class="mt-2">
-                    <input type="email" name="email" id="email" autocomplete="email" required class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
+                <label for="email" class="block font-medium text-gray-900 scaled-text">Email</label>
+                <div class="mt-3">
+                    <input type="email" name="email" id="email" autocomplete="email" required 
+                        class="block w-full rounded-lg bg-white scaled-input text-gray-900 outline-1 outline-gray-300 focus:outline-2 focus:outline-indigo-600">
                 </div>
             </div>
+
             <div>
-                <label for="create-username" class="block text-sm/6 font-medium text-gray-900">Username</label>
-                <div class="mt-2">
-                    <input type="text" name="username" id="create-username" autocomplete="username" required class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
+                <label for="create-username" class="block font-medium text-gray-900 scaled-text">Username</label>
+                <div class="mt-3">
+                    <input type="text" name="username" id="create-username" autocomplete="username" required 
+                        class="block w-full rounded-lg bg-white scaled-input text-gray-900 outline-1 outline-gray-300 focus:outline-2 focus:outline-indigo-600">
                 </div>
             </div>
+
             <div>
-                <label for="major" class="block text-sm/6 font-medium text-gray-900">Major</label>
-                <div class="mt-2">
-                    <input type="text" name="major" id="major" required class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
+                <label for="major" class="block font-medium text-gray-900 scaled-text">Major</label>
+                <div class="mt-3">
+                    <input type="text" name="major" id="major" required 
+                        class="block w-full rounded-lg bg-white scaled-input text-gray-900 outline-1 outline-gray-300 focus:outline-2 focus:outline-indigo-600">
                 </div>
             </div>
+
             <div>
-                <label for="create-password" class="block text-sm/6 font-medium text-gray-900">Password</label>
-                <div class="mt-2">
-                    <input type="password" name="password" id="create-password" autocomplete="new-password" required class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
+                <label for="create-password" class="block font-medium text-gray-900 scaled-text">Password</label>
+                <div class="mt-3">
+                    <input type="password" name="password" id="create-password" autocomplete="new-password" required 
+                        class="block w-full rounded-lg bg-white scaled-input text-gray-900 outline-1 outline-gray-300 focus:outline-2 focus:outline-indigo-600">
                 </div>
             </div>
+
             <div>
-                <button type="submit" class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white">Create Account</button>
+                <button type="submit" 
+                    class="flex w-full justify-center rounded-lg bg-indigo-600 text-white hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 scaled-button">
+                    Create Account
+                </button>
             </div>
         </form>
-        <p class="mt-10 text-center text-sm/6 text-gray-500">
+
+        <p class="mt-12 text-center text-gray-500 scaled-text">
             Already have an account?
             <a href="#" onclick="toggleForms(event)" class="font-semibold text-indigo-600 hover:text-indigo-500">Sign in</a>
         </p>
@@ -146,8 +164,8 @@ function toggleForms(event) {
     
     if (loginSection.classList.contains('fade-in')) {
         loginSection.classList.remove('fade-in');
-        loginSection.classList.add('fade-out');fade-out');
-        setTimeout(() => {on.classList.add('fade-in');
+        loginSection.classList.add('fade-out');
+        setTimeout(() => {
             loginSection.classList.add('hidden');
             createSection.classList.remove('hidden');
             setTimeout(() => {
