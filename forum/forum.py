@@ -49,8 +49,14 @@ def addpost():
 
 @bp.route('/home')
 def home():
-    posts = Post.query.order_by(Post.created_at.desc()).all()
-    return render_template("allposts.html", posts=posts)
+    major = request.args.get("major")
+    majors = db.session.query(User.major).distinct().all()
+    majors = [m[0] for m in majors if m[0]]
+    if major and major != "All":
+        posts = Post.query.join(User).filter(User.major == major).order_by(Post.created_at.desc()).all()
+    else:
+        posts = Post.query.order_by(Post.created_at.desc()).all()
+    return render_template("allposts.html", posts=posts, majors=majors, selected_major=major or "All")
 
 @bp.route('/subforum')
 def subforum():

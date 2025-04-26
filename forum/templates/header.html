@@ -52,8 +52,8 @@
                         <!-- Desktop navigation -->
                         <div class="ml-10 flex items-baseline space-x-4">
                             <a href="/home" class="rounded-md {% if request.path == '/home' %}bg-gray-900 text-white{% else %}text-gray-300 hover:bg-gray-700 hover:text-white{% endif %} px-3 py-2 text-sm font-medium" {% if request.path == '/home' %}aria-current="page"{% endif %}>The Barter Board</a>
-                            <a href="/addpost" class="rounded-md {% if request.path == '/addpost' %}bg-gray-900 text-white{% else %}text-gray-300 hover:bg-gray-700 hover:text-white{% endif %} px-3 py-2 text-sm font-medium" {% if request.path == '/addpost' %}aria-current="page"{% endif %}>Create Barter</a>
-                            <a href="/transfer" class="rounded-md {% if request.path == '/transfer' %}bg-gray-900 text-white{% else %}text-gray-300 hover:bg-gray-700 hover:text-white{% endif %} px-3 py-2 text-sm font-medium" {% if request.path == '/transfer' %}aria-current="page"{% endif %}>Transfer</a>
+                            <a href="{% if current_user.is_authenticated %}/addpost{% else %}/loginform{% endif %}" class="rounded-md {% if request.path == '/addpost' %}bg-gray-900 text-white{% else %}text-gray-300 hover:bg-gray-700 hover:text-white{% endif %} px-3 py-2 text-sm font-medium" {% if request.path == '/addpost' %}aria-current="page"{% endif %}>Create Barter</a>
+                            <a href="{% if current_user.is_authenticated %}/transfer{% else %}/loginform{% endif %}" class="rounded-md {% if request.path == '/transfer' %}bg-gray-900 text-white{% else %}text-gray-300 hover:bg-gray-700 hover:text-white{% endif %} px-3 py-2 text-sm font-medium" {% if request.path == '/transfer' %}aria-current="page"{% endif %}>Transfer</a>
                         </div>
                     </div>
                 </div>

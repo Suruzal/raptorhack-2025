@@ -1,5 +1,23 @@
 {% extends 'layout.html' %}
 {% block body %}
+<div class="flex flex-wrap gap-2 mb-6">
+    <form method="get" action="/home" class="inline">
+        <input type="hidden" name="major" value="All">
+        <button type="submit"
+            class="rounded-md px-3 py-1.5 text-sm font-semibold {% if selected_major == 'All' %}bg-[#24b3af] text-white{% else %}bg-white text-gray-900 border border-gray-300 hover:bg-[#24b3af] hover:text-white{% endif %}">
+            All Majors
+        </button>
+    </form>
+    {% for major in majors %}
+    <form method="get" action="/home" class="inline">
+        <input type="hidden" name="major" value="{{ major }}">
+        <button type="submit"
+            class="rounded-md px-3 py-1.5 text-sm font-semibold {% if selected_major == major %}bg-[#24b3af] text-white{% else %}bg-white text-gray-900 border border-gray-300 hover:bg-[#24b3af] hover:text-white{% endif %}">
+            {{ major }}
+        </button>
+    </form>
+    {% endfor %}
+</div>
 {% if posts %}
     {% for post in posts %}
         <div class="post">
@@ -26,7 +44,7 @@
     {% endfor %}
 {% else %}
     <div class="noposts">
-        <b>Something has gone wrong. Please try again in a bit.</b>
+        <b>No Barters currently available. Create one!</b>
     </div>
 {% endif %}
 {% endblock %}

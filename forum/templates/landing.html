@@ -91,7 +91,7 @@
                 <div class="flex lg:flex lg:gap-x-12">
                     <a href="/home" class="text-sm/6 font-semibold text-gray-900">View Tutors & Students</a>
                     <a href="/addpost" class="text-sm/6 font-semibold text-gray-900">Create Barter</a>
-                    <a href="/profile" class="text-sm/6 font-semibold text-gray-900">Profile</a>
+                    <a href="{% if current_user.is_authenticated %}/profile{% else %}/loginform{% endif %}" class="text-sm/6 font-semibold text-gray-900">Profile</a>
                 </div>
                 <div class="flex lg:flex lg:flex-1 lg:justify-end">
                     <a href="/loginform" class="text-sm/6 font-semibold text-gray-900">Log in <span aria-hidden="true">&rarr;</span></a>
@@ -119,7 +119,7 @@
                             <div class="space-y-2 py-6">
                                 <a href="/home" class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50">View Tutors</a>
                                 <a href="/create" class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50">Create Tutoring Post</a>
-                                <a href="/profile" class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50">Profile</a>
+                                <a href="{% if current_user.is_authenticated %}/profile{% else %}/loginform{% endif %}" class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50">Profile</a>
                             </div>
                             <div class="py-6">
                                 <a href="/loginform" class="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50">Log in</a>
