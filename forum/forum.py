@@ -229,3 +229,45 @@ def generateLinkPath(subforumid):
     for l in reversed(links):
         link = link + " / " + l
     return link
+
+@bp.route('/profile')
+@login_required
+def profile():
+    return render_template('profile.html')
+
+@bp.route('/update_email', methods=['POST'])
+@login_required
+def update_email():
+    new_email = request.form.get('new_email')
+    errors = []
+    
+    if not new_email:
+        errors.append("Email cannot be empty")
+    elif email_taken(new_email) and new_email != current_user.email:
+        errors.append("Email is already in use")
+        
+    if errors:
+        return render_template('profile.html', errors=errors)
+        
+    current_user.email = new_email
+    db.session.commit()
+    return redirect('/profile')
+
+@bp.route('/update_password', methods=['POST'])
+@login_required
+def update_password():
+    current_password = request.form.get('current_password')
+    new_password = request.form.get('new_password')
+    errors = []
+    
+    if not current_user.check_password(current_password):
+        errors.append("Current password is incorrect")
+    elif not valid_password(new_password):
+        errors.append("New password is not valid")
+        
+    if errors:
+        return render_template('profile.html', errors=errors)
+        
+    current_user.set_password(new_password)
+    db.session.commit()
+    return redirect('/profile')

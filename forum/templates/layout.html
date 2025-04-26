@@ -9,22 +9,22 @@
 <body>
 <!-- Remove .page wrapper from header so header can be full width -->
 	{% include 'header.html' %}
-<div class="page" style="margin-top:0;">
-	{% if errors %}
-	<div class="errors">
-	{% for error in errors %}
+<div class="page" style="margin-top:1%;">
+    {% if errors %}
+    <div class="errors">
+    {% for error in errors %}
 		<p class="error">
 			{{ error }}
 		</p>
 	{% endfor %}
 	</div>
 {% endif %}
-	<div class="content" style="margin-top:0;">
-		{% block body %}{% endblock %}
-	</div>
+    <div class="content" style="margin-top:0;">
+        {% block body %}{% endblock %}
+    </div>
 </div>
-<footer class="bg-gray-800 text-white py-4 text-center fixed bottom-0 w-full">
-    <p>Copyright <a href="https://github.com/Suruzal" class="text-[#24b3af] hover:underline" target="_blank" rel="noopener noreferrer">Suruzal</a> 2025</p>
+<footer class="bg-gray-800 text-white h-16 flex items-center justify-center font-['Inter'] w-full text-center mt-[1%]">
+    <p class="w-full" style="padding-top: 0px; margin-bottom: 0px;">Created by <a href="https://github.com/Suruzal" class="text-[#24b3af] hover:underline" target="_blank" rel="noopener noreferrer">Suruzal</a> for RaptorHack 2025</p>
 </footer>
 </body>
 </html>

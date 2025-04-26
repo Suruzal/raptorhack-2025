@@ -75,8 +75,8 @@
                     </button>
                 </div>
                 <div class="flex lg:flex lg:gap-x-12">
-                    <a href="/home" class="text-sm/6 font-semibold text-gray-900">View Tutors</a>
-                    <a href="/create" class="text-sm/6 font-semibold text-gray-900">Create Tutoring Post</a>
+                    <a href="/home" class="text-sm/6 font-semibold text-gray-900">View Tutors & Students</a>
+                    <a href="/addpost" class="text-sm/6 font-semibold text-gray-900">Create Barter</a>
                     <a href="/profile" class="text-sm/6 font-semibold text-gray-900">Profile</a>
                 </div>
                 <div class="flex lg:flex lg:flex-1 lg:justify-end">
@@ -149,8 +149,16 @@
             <p class="mt-2 max-w-lg text-sm/6 text-gray-600 max-lg:text-center">BarterBoard is a well respected tutoring platform that respects its tutors and tries to uphold their integrity and time, resulting in a safe and positive learning environment</p>
           </div>
           <div class="@container relative min-h-[30rem] w-full grow max-lg:mx-auto max-lg:max-w-sm">
-            <div class="absolute inset-x-10 top-10 bottom-0 overflow-hidden rounded-t-[12cqw] border-x-[3cqw] border-t-[3cqw] border-gray-700 bg-gray-900 shadow-2xl">
-              <img class="h-full w-full object-cover object-[center_top]" src="{{ url_for('static', filename='images/tutors-dashboard.png') }}" alt="Tutors Dashboard">
+            <div class="absolute inset-x-6 top-6 bottom-0 overflow-hidden rounded-lg border-2 border-gray-700 bg-gray-900 shadow-2xl">
+              <!-- Monitor top bar with buttons -->
+              <div class="flex items-center bg-gray-800 px-4 py-2">
+                <div class="flex gap-2">
+                  <div class="h-3 w-3 rounded-full bg-red-500"></div>
+                  <div class="h-3 w-3 rounded-full bg-yellow-500"></div>
+                  <div class="h-3 w-3 rounded-full bg-green-500"></div>
+                </div>
+              </div>
+              <img class="h-full w-full object-cover object-[center_top]" src="{{ url_for('static', filename='images/HomePageSS.png') }}" alt="Tutors Homepage">
             </div>
           </div>
         </div>
@@ -210,5 +218,8 @@
     </div>
   </div>
 </div>
+<footer class="bg-gray-800 text-white h-16 flex items-center justify-center font-['Inter'] w-full text-center mt-[1%]">
+    <p class="w-full">Created by <a href="https://github.com/Suruzal" class="text-[#24b3af] hover:underline" target="_blank" rel="noopener noreferrer">Suruzal</a> for RaptorHack 2025</p>
+</footer>
 </body>
 </html>
